@@ -1,6 +1,6 @@
-function convertLinkToDownloadable(link: string): string {
+function convertLinkToDownloadable(link) {
   if (!link) {
-    return ""
+    return "";
   }
 
   if (link.includes("drive.google.com")) {
@@ -16,4 +16,4 @@ function convertLinkToDownloadable(link: string): string {
   return link;
 }
 
-export { convertLinkToDownloadable };
+module.exports = { convertLinkToDownloadable };

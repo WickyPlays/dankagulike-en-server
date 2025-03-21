@@ -1,13 +1,13 @@
-import { open, Database } from "sqlite";
-import sqlite3 from "sqlite3";
+const { open } = require("sqlite");
+const sqlite3 = require("sqlite3");
 
-export const dbPromise = open({
+exports.dbPromise = open({
   filename: './.data/charts.db',
   driver: sqlite3.Database
 });
 
-export async function initializeDatabase() {
-  const db = await dbPromise;
+exports.initializeDatabase = async function() {
+  const db = await exports.dbPromise;
 
   await db.exec(`
     CREATE TABLE IF NOT EXISTS sessions (
@@ -71,4 +71,4 @@ export async function initializeDatabase() {
       FOREIGN KEY(voteId) REFERENCES votes(id)
     )
   `);
-}
+};

@@ -1,7 +1,6 @@
-import { Content } from "../types";
-import { convertLinkToDownloadable } from "../utils/converter";
+const { convertLinkToDownloadable } = require("../utils/converter.cjs");
 
-export function transformContent(content: any): Content {
+module.exports.transformContent = function(content) {
   return {
     id: Number(content.id),
     contentType: Number(content.contentType),
@@ -15,4 +14,4 @@ export function transformContent(content: any): Content {
     voteAverageScore: Number(content.voteAverageScore),
     songInfo: JSON.parse(content.songInfo || '{"difficulties":[0,0,0,0,0],"hasLua":false}')
   };
-}
+};

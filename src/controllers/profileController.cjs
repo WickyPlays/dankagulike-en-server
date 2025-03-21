@@ -1,15 +1,14 @@
-import { Request, Response } from "express";
-import { dbPromise } from "../utils/database";
+const {dbPromise} = require("../utils/database.cjs");
 
-export const getCharts = async (req: Request, res: Response) => {
-  const username = req.user ? (req.user as any).username : null;
+exports.getCharts = async (req, res) => {
+  const username = req.user ? (req.user).username : null;
   const db = await dbPromise;
 
   try {
     const charts = await db.all(`
       SELECT * FROM contents
       WHERE googleUserId = ?
-    `, [(req.user as any).id]);
+    `, [(req.user).id]);
 
     res.render("profile_charts", { username, charts });
   } catch (error) {
@@ -17,14 +16,14 @@ export const getCharts = async (req: Request, res: Response) => {
   }
 };
 
-export const getChartsAdd = (req: Request, res: Response) => {
-  const username = req.user ? (req.user as any).username : null;
+exports.getChartsAdd = (req, res) => {
+  const username = req.user ? (req.user).username : null;
   res.render("profile_charts_add", { username });
 };
 
-export const postChartsAdd = async (req: any, res: any) => {
+exports.postChartsAdd = async (req, res) => {
   const db = await dbPromise;
-  const user = req.user as any;
+  const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -112,10 +111,10 @@ export const postChartsAdd = async (req: any, res: any) => {
   }
 };
 
-export const getEditChart = async (req: any, res: any) => {
+exports.getEditChart = async (req, res) => {
   const db = await dbPromise;
   const { id } = req.params;
-  const user = req.user as any;
+  const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -134,7 +133,7 @@ export const getEditChart = async (req: any, res: any) => {
     const googleUser = await db.get("SELECT username FROM googleusers WHERE id = ?", [user.id]);
 
     //A bit annoying here...
-    function formatDateLocal(dateString: any) {
+    function formatDateLocal(dateString) {
       const date = new Date(dateString);
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -148,10 +147,10 @@ export const getEditChart = async (req: any, res: any) => {
   }
 };
 
-export const putEditChart = async (req: any, res: any) => {
+exports.putEditChart = async (req, res) => {
   const db = await dbPromise;
   const { id } = req.params;
-  const user = req.user as any;
+  const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -235,15 +234,15 @@ export const putEditChart = async (req: any, res: any) => {
   }
 };
 
-export const getEditProfile = (req: Request, res: Response) => {
-  const username = req.user ? (req.user as any).username : null;
+exports.getEditProfile = (req, res) => {
+  const username = req.user ? (req.user).username : null;
   res.render('profile_edit', { username });
 };
 
-export const putEditProfile = async (req: any, res: any) => {
+exports.putEditProfile = async (req, res) => {
   const db = await dbPromise;
   const { username } = req.body;
-  const user = req.user as any;
+  const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });
@@ -261,10 +260,10 @@ export const putEditProfile = async (req: any, res: any) => {
   }
 };
 
-export const deleteChart = async (req: any, res: any) => {
+exports.deleteChart = async (req, res) => {
   const db = await dbPromise;
   const { id } = req.params;
-  const user = req.user as any;
+  const user = req.user;
 
   if (!user) {
     return res.status(401).json({ message: "Unauthorized" });

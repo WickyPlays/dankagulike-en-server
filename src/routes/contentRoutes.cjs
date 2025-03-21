@@ -1,6 +1,6 @@
-import express from "express";
-import { getContents, getContentById, getContentDescription, incrementDownloadCount, getContentsPage } from "../controllers/contentController";
-import { getVotes, getVotesByContentId, addVote, updateVote } from "../controllers/voteController";
+const express = require("express");
+const { getContents, getContentById, getContentDescription, incrementDownloadCount, getContentsPage } = require("../controllers/contentController.cjs");
+const { getVotes, getVotesByContentId, addVote, updateVote } = require("../controllers/voteController.cjs");
 
 const router = express.Router();
 
@@ -12,4 +12,5 @@ router.put("/contents/:id/downloaded", incrementDownloadCount);
 router.get("/contents/:id/vote", getVotesByContentId);
 router.post("/contents/:id/vote", addVote);
 router.put("/contents/:id/vote", updateVote);
-export default router;
+
+module.exports = router;

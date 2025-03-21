@@ -1,6 +1,6 @@
-import { dbPromise } from "../utils/database";
+const { dbPromise } = require("../utils/database.cjs");
 
-export const updateVoteAverageScore = async (contentId: string) => {
+exports.updateVoteAverageScore = async (contentId) => {
   const db = await dbPromise;
   const votes = await db.all("SELECT score FROM votes WHERE contentId = ?", [contentId]);
   if (votes.length === 0) return;

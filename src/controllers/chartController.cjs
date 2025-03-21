@@ -1,7 +1,6 @@
-import { Request, Response } from "express";
-import { dbPromise } from "../utils/database";
+const dbPromise = require("../utils/database.cjs");
 
-export const getChartDetailPage = async (req: any, res: any) => {
+exports.getChartDetailPage = async (req, res) => {
   const { id } = req.params;
 
   if (!id) {
@@ -33,7 +32,7 @@ export const getChartDetailPage = async (req: any, res: any) => {
 
     res.render("charts_detail", {
       chart: formattedChart,
-      username: req.user ? (req.user as any).username : null,
+      username: req.user ? req.user.username : null,
     });
   } catch (error) {
     console.error("Database query error:", error);

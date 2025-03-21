@@ -1,14 +1,13 @@
-import { Request, Response } from "express";
-import { dbPromise } from "../utils/database";
+const { dbPromise } = require("../utils/database.cjs");
 
-export const getLikesByUserId = async (req: Request, res: Response) => {
+exports.getLikesByUserId = async (req, res) => {
   const userId = req.params.userId;
   const db = await dbPromise;
   const likes = await db.all("SELECT * FROM likes WHERE userId = ?", [userId]);
   res.status(200).json({ likes });
 };
 
-export const addLike = async (req: Request, res: Response) => {
+exports.addLike = async (req, res) => {
   const voteId = req.body.voteId;
   const userId = req.params.userId;
   const db = await dbPromise;

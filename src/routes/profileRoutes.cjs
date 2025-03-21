@@ -1,5 +1,5 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   getCharts,
   getChartsAdd,
   postChartsAdd,
@@ -8,7 +8,7 @@ import {
   deleteChart,
   getEditChart,
   putEditChart,
-} from "../controllers/profileController";
+} = require("../controllers/profileController.cjs");
 
 const router = express.Router();
 
@@ -22,4 +22,4 @@ router.delete("/charts/:id", deleteChart);
 router.get("/charts/edit/:id", getEditChart);
 router.put("/charts/edit/:id", putEditChart);
 
-export default router;
+module.exports = router;

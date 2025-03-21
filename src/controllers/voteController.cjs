@@ -1,21 +1,20 @@
-import { Request, Response } from "express";
-import { dbPromise } from "../utils/database";
-import { updateVoteAverageScore } from "../services/voteService";
+const { dbPromise } = require("../utils/database.cjs");
+const { updateVoteAverageScore } = require("../services/voteService.cjs");
 
-export const getVotes = async (req: Request, res: Response) => {
+exports.getVotes = async (req, res) => {
   const db = await dbPromise;
   const votes = await db.all("SELECT * FROM votes");
   res.status(200).json({ votes });
 };
 
-export const getVotesByContentId = async (req: Request, res: Response) => {
+exports.getVotesByContentId = async (req, res) => {
   const id = req.params.id;
   const db = await dbPromise;
   const votes = await db.all("SELECT * FROM votes WHERE contentId = ?", [id]);
   res.status(200).json({ votes });
 };
 
-export const addVote = async (req: Request, res: Response) => {
+exports.addVote = async (req, res) => {
   const contentId = req.params.id;
   const db = await dbPromise;
   try {
@@ -37,7 +36,7 @@ export const addVote = async (req: Request, res: Response) => {
   }
 };
 
-export const updateVote = async (req: Request, res: Response) => {
+exports.updateVote = async (req, res) => {
   const contentId = req.params.id;
   const voteId = req.body.id;
   const db = await dbPromise;

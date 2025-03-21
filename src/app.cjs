@@ -1,19 +1,19 @@
-import express from "express";
-import path from "path";
-import passport from "passport";
-import session from "express-session";
-import dotenv from "dotenv";
-import cookieParser from "cookie-parser";
-import authRoutes from "./routes/authRoutes";
-import contentRoutes from "./routes/contentRoutes";
-import likeRoutes from "./routes/likeRoutes";
-import supportRoutes from "./routes/supportRoutes";
-import profileRoutes from "./routes/profileRoutes";
-import chartRoutes from "./routes/chartRoutes";
-import { initializeDatabase } from "./utils/database";
+const express = require("express");
+const path = require("path");
+const passport = require("passport");
+const session = require("express-session");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const authRoutes = require("./routes/authRoutes.cjs");
+const contentRoutes = require("./routes/contentRoutes.cjs");
+const likeRoutes = require("./routes/likeRoutes.cjs");
+const supportRoutes = require("./routes/supportRoutes.cjs");
+const profileRoutes = require("./routes/profileRoutes.cjs");
+const chartRoutes = require("./routes/chartRoutes.cjs");
+const { initializeDatabase } = require("./utils/database.cjs");
 dotenv.config();
-import "./utils/passport"; 
-import { authMiddleware } from "./middleware/authMiddleware";
+require("./utils/passport.cjs"); 
+const { authMiddleware } = require("./middleware/authMiddleware.cjs");
 
 const app = express();
 
@@ -63,3 +63,4 @@ const EXPRESS_PORT = process.env.PORT || 3000;
 app.listen(EXPRESS_PORT, () => {
   console.log("Server running on port", EXPRESS_PORT);
 });
+

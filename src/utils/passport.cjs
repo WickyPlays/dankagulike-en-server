@@ -1,7 +1,8 @@
-import passport from "passport";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import { dbPromise } from "./database";
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const JwtStrategy = require("passport-jwt").Strategy;
+const ExtractJwt = require("passport-jwt").ExtractJwt;
+const { dbPromise } = require("./database.cjs");
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -10,7 +11,7 @@ const opts = {
 
 // JWT Strategy
 passport.use(
-  new JwtStrategy(opts as any, async (jwtPayload, done) => {
+  new JwtStrategy(opts, async (jwtPayload, done) => {
     try {
       const db = await dbPromise;
       const user = await db.get("SELECT * FROM googleusers WHERE googleId = ?", [jwtPayload.googleId]);
@@ -29,9 +30,9 @@ passport.use(
 passport.use(
   new GoogleStrategy(
     {
-      clientID: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-      callbackURL: process.env.CALLBACK_URL!,
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.CALLBACK_URL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -58,11 +59,11 @@ passport.use(
   )
 );
 
-passport.serializeUser((user: any, done) => {
+passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
-passport.deserializeUser(async (id: number, done) => {
+passport.deserializeUser(async (id, done) => {
   try {
     const db = await dbPromise;
     const user = await db.get("SELECT * FROM googleusers WHERE id = ?", [id]);
