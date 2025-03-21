@@ -1,14 +1,8 @@
-import { Request, Response, NextFunction } from "express";
-import passport from "passport";
+import { Request, Response, NextFunction } from 'express';
 
-const isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate("jwt", { session: false }, (err: any, user: any) => {
-    if (err || !user) {
-      return res.redirect("/auth/login?returnUrl=" + encodeURIComponent(req.originalUrl));
-    }
-    req.user = user;
-    next();
-  })(req, res, next);
+export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.status(401).json({ message: 'Unauthorized' });
 };
-
-export default isAuthenticated;

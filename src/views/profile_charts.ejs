@@ -14,105 +14,69 @@
 </head>
 
 <body class="has-navbar-fixed-top">
-  <!-- Include the navbar -->
   <%- include('templates/template_navbar.ejs') %>
 
   <div class="container">
     <div class="header">
       <h1>My charts</h1>
-      <button class="button is-primary">
+      <a href="/profile/charts/add" class="button is-primary">
         <span class="icon is-small">
           <i class="fas fa-plus"></i>
         </span>
         <span>Add new chart</span>
-      </button>
+      </a>
     </div>
     <hr>
     <div>
       <div class="chart-cards">
-        <!-- Example Chart Card 1 -->
-        <div class="chart-card">
-          <div class="chart-card-title-container">
-            <p class="chart-card-title">Chart 1</p>
-            <span class="chart-card-tag">
-              Song
-              <i class="fas fa-code"></i>
-            </span>
-          </div>
-          <p class="chart-card-publisher">By: <span class="chart-card-publisher-name">WickyPlays</span></p>
-          <p class="chart-card-desc">Description goes here</p>
-          <div class="chart-card-diff">
-            <span class="chart-card-diff-node diff-easy">0</span>
-            <span class="chart-card-diff-node diff-normal">0</span>
-            <span class="chart-card-diff-node diff-hard">0</span>
-            <span class="chart-card-diff-node diff-extra">0</span>
-            <span class="chart-card-diff-node diff-lunatic">0</span>
-          </div>
-          <div class="chart-card-actions">
-            <button class="button is-small is-primary">
-              <span class="icon">
-                <i class="fas fa-arrow-circle-down"></i>
-              </span>
-              <span>Download</span>
-            </button>
-            <div class="chart-card-stats">
-              <span class="icon-text">
-                <span class="icon">
-                  <i class="fas fa-thumbs-up"></i>
-                </span>
-                <span>0</span>
+        <% charts.forEach(chart => { %>
+          <div class="chart-card">
+            <div class="chart-card-title-container">
+              <p class="chart-card-title"><%= chart.title %></p>
+              <span class="chart-card-tag">
+                Song
+                <i class="fas fa-code"></i>
               </span>
             </div>
-            <!-- Delete Button -->
-            <button class="button is-small is-danger delete-button" data-id="1">
-              <span class="icon">
-                <i class="fas fa-trash"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+            <p class="chart-card-publisher">By: <span class="chart-card-publisher-name"><%= username %></span></p>
+            <p class="chart-card-desc"><%= chart.description %></p>
+            <div class="chart-card-diff">
+              <span class="chart-card-diff-node diff-easy"><%= chart.diff1 %></span>
+              <span class="chart-card-diff-node diff-normal"><%= chart.diff2 %></span>
+              <span class="chart-card-diff-node diff-hard"><%= chart.diff3 %></span>
+              <span class="chart-card-diff-node diff-extra"><%= chart.diff4 %></span>
+              <span class="chart-card-diff-node diff-lunatic"><%= chart.diff5 %></span>
+            </div>
+            <div class="chart-card-actions">
+              <button class="button is-small is-primary">
+                <span class="icon">
+                  <i class="fas fa-arrow-circle-down"></i>
+                </span>
+                <span>Download</span>
+              </button>
+              <div class="chart-card-stats">
+                <span class="icon-text">
+                  <span class="icon">
+                    <i class="fas fa-star"></i>
+                  </span>
+                  <span><%= chart.voteAverageScore %></span>
+                </span>
+                <span class="icon-text">
+                  <span class="icon">
+                    <i class="fas fa-download"></i>
+                  </span>
+                  <span><%= chart.downloadCount %></span>
+                </span>
 
-        <!-- Example Chart Card 2 -->
-        <div class="chart-card">
-          <div class="chart-card-title-container">
-            <p class="chart-card-title">Chart 2</p>
-            <span class="chart-card-tag">
-              Song
-              <i class="fas fa-code"></i>
-            </span>
-          </div>
-          <p class="chart-card-publisher">By: <span class="chart-card-publisher-name">WickyPlays</span></p>
-          <p class="chart-card-desc">Description goes here</p>
-          <div class="chart-card-diff">
-            <span class="chart-card-diff-node diff-easy">0</span>
-            <span class="chart-card-diff-node diff-normal">0</span>
-            <span class="chart-card-diff-node diff-hard">0</span>
-            <span class="chart-card-diff-node diff-extra">0</span>
-            <span class="chart-card-diff-node diff-lunatic">0</span>
-          </div>
-          <div class="chart-card-actions">
-            <button class="button is-small is-primary">
-              <span class="icon">
-                <i class="fas fa-arrow-circle-down"></i>
-              </span>
-              <span>Download</span>
-            </button>
-            <div class="chart-card-stats">
-              <span class="icon-text">
+              </div>
+              <button class="button is-small is-danger delete-button" data-id="<%= chart.id %>">
                 <span class="icon">
-                  <i class="fas fa-thumbs-up"></i>
+                  <i class="fas fa-trash"></i>
                 </span>
-                <span>0</span>
-              </span>
+              </button>
             </div>
-            <!-- Delete Button -->
-            <button class="button is-small is-danger delete-button" data-id="2">
-              <span class="icon">
-                <i class="fas fa-trash"></i>
-              </span>
-            </button>
           </div>
-        </div>
+        <% }) %>
       </div>
     </div>
   </div>

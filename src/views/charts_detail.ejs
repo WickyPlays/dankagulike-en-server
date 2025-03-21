@@ -1,22 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chart detail | DankaguLike EN Server</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <link rel="stylesheet" href="/charts_detail.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/charts_detail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body class="has-navbar-fixed-top">
     <!-- Include the navbar -->
     <%- include('templates/template_navbar.ejs') %>
 
-    <div class="container">
-      
-     
-    </div>
-    <script src="./main.js"></script>
+        <div class="container">
+            <button class="button btn-back is-white" onclick="window.location.href = '/'">
+                <span class="icon">
+                    <i class="fas fa-arrow-left"></i>
+                </span>
+                <span>Back to chart list</span>
+            </button>
+            <div class="content-grid">
+                <!-- Left Side: Image -->
+                <div class="image-container">
+                    <figure class="image is-4by3">
+                        <img src="<%= chart.imageUrl || '/path/to/placeholder/image.png' %>" alt="Chart Image"
+                            class="chart-image">
+                    </figure>
+                </div>
+
+                <!-- Right Side: Details -->
+                <div class="column">
+                    <div class="title-container">
+                        <h1 class="title is-2">
+                            <%= chart.title %>
+                        </h1>
+                        <span class="tag chart-type is-light">
+                            <%= chart.contentType %>
+                        </span>
+                    </div>
+
+                    <p class="subtitle">By: <span class="chart-username"><%= chart.publisher %></span>
+                    </p>
+                    <p>Submitted by: <span class="chart-google-username"><%= chart.googleUsername %></span></p>
+                    <p class="content">
+                        <%= chart.description %>
+                    </p>
+
+                    <!-- Difficulty Nodes -->
+                    <div class="field-diff field is-grouped is-grouped-multiline">
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Easy</span>
+                                <span class="tag diff-easy">
+                                    <%= chart.diff1 %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Normal</span>
+                                <span class="tag diff-normal">
+                                    <%= chart.diff2 %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Hard</span>
+                                <span class="tag diff-hard">
+                                    <%= chart.diff3 %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Extra</span>
+                                <span class="tag diff-extra">
+                                    <%= chart.diff4 %>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="control">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">Lunatic</span>
+                                <span class="tag diff-lunatic">
+                                    <%= chart.diff5 %>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Button -->
+                    <a href="<%= chart.downloadUrl %>" class="button btn-download is-primary"
+                        aria-label="Download this chart">
+                        <span class="icon">
+                            <i class="fas fa-download"></i>
+                        </span>
+                        <span>Download this chart</span>
+                    </a>
+
+                    <!-- Lua Icon (Conditional) -->
+                    <% if (chart.hasLua) { %>
+                        <span class="icon-text has-text-info ml-3"
+                            data-tooltip="This chart includes a Lua script for advanced features.">
+                            <span class="icon">
+                                <i class="fas fa-file-code"></i>
+                            </span>
+                            <span>Includes Lua</span>
+                        </span>
+                        <% } %>
+
+                            <div class="stats">
+                                <div class="mt-4">
+                                    <button class="button is-light btn-like" aria-label="Like this chart">
+                                        <span class="icon">
+                                            <i class="fas fa-heart"></i>
+                                        </span>
+                                        <span>Like</span>
+                                        <span class="ml-2">
+                                            <%= chart.likes || 0 %>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="mt-4">
+                                    <button class="button is-light btn-like" aria-label="Download count">
+                                        <span class="icon">
+                                            <i class="fas fa-download"></i>
+                                        </span>
+                                        <span>Download</span>
+                                        <span class="ml-2">
+                                            <%= chart.downloads || 0 %>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./main.js"></script>
 </body>
+
 </html>

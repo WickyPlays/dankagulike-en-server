@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-h1 {
+.header h1 {
   color: #FFF;
   font-size: 33px;
   font-weight: 700;
@@ -13,12 +13,6 @@ h1 {
 .container {
   padding: 30px 10rem;
   box-sizing: border-box;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
 }
 
 .chart-cards {
@@ -34,20 +28,20 @@ h1 {
   background-color: #ffffff1f;
 }
 
-.chart-card-title-container {
+.chart-card .chart-card-title-container {
   display: flex;
   align-items: center;
   gap: 5px;
   margin-bottom: 15px;
 }
 
-.chart-card-title {
+.chart-card .chart-card-title-container .chart-card-title {
   color: #FFF;
   font-size: 21px;
   font-weight: 600;
 }
 
-.chart-card-tag {
+.chart-card .chart-card-title-container .chart-card-tag {
   background-color: #FFF;
   padding: 2px 10px;
   border-radius: 10px;
@@ -59,68 +53,131 @@ h1 {
   gap: 5px;
 }
 
-.chart-card-publisher {
+.chart-card .chart-card-publisher {
   font-size: 15px;
 }
 
-.chart-card-publisher-name {
+.chart-card .chart-card-publisher .chart-card-publisher-name {
   font-weight: 600;
   color: #FFF;
 }
 
-.chart-card-desc {
+.chart-card .chart-card-desc {
   margin-bottom: 15px;
 }
 
-.chart-card-diff {
+.chart-card .chart-card-diff {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.chart-card-diff-node {
+.chart-card .chart-card-diff .chart-card-diff-node {
   padding: 2px 10px;
   color: #FFF;
 }
 
-.diff-easy {
+.chart-card .chart-card-diff .diff-easy {
   background-color: #4caf50;
 }
 
-.diff-normal {
+.chart-card .chart-card-diff .diff-normal {
   background-color: #2196f3;
 }
 
-.diff-hard {
+.chart-card .chart-card-diff .diff-hard {
   background-color: #ffc107;
 }
 
-.diff-extra {
+.chart-card .chart-card-diff .diff-extra {
   background-color: #ff5722;
 }
 
-.diff-lunatic {
+.chart-card .chart-card-diff .diff-lunatic {
   background-color: #9c27b0;
 }
 
-.chart-card-actions {
+.chart-card .chart-card-actions {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.chart-card-stats {
+.chart-card .chart-card-actions .chart-card-stats {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.delete-button {
+.chart-card .chart-card-actions .delete-button {
   background-color: #ff3860;
   border-color: transparent;
   color: #fff;
 }
 
-.delete-button:hover {
+.chart-card .chart-card-actions .delete-button:hover {
   background-color: #ff1f4b;
+}
+
+.modal.is-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .modal-background {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal .modal-card {
+  background-color: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 400px;
+}
+
+.modal .modal-card .modal-card-head {
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 1rem;
+}
+
+.modal .modal-card .modal-card-head .modal-card-title {
+  color: #000;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.modal .modal-card .modal-card-head .delete {
+  background-color: transparent;
+  border: none;
+  color: #000;
+}
+
+.modal .modal-card .modal-card-body {
+  padding: 1.5rem;
+  color: #000;
+}
+
+.modal .modal-card .modal-card-foot {
+  background-color: #fff;
+  border-top: 1px solid #dbdbdb;
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal .modal-card .modal-card-foot .button.is-danger {
+  background-color: #ff3860;
+  border-color: transparent;
+  color: #fff;
+}
+
+.modal .modal-card .modal-card-foot .button.is-danger:hover {
+  background-color: #ff1f4b;
+}
+
+.modal-card-body {
+  background-color: #FFF;
 }

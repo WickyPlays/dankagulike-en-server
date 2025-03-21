@@ -14,6 +14,7 @@ import chartRoutes from "./routes/chartRoutes";
 import { initializeDatabase } from "./utils/database";
 dotenv.config();
 import "./utils/passport"; 
+import { authMiddleware } from "./middleware/authMiddleware";
 
 const app = express();
 
@@ -32,7 +33,7 @@ app.use(
   session({
     store: new SQLiteStore({
       db: "charts.db",
-      dir: "./.data/charts.db",
+      dir: "./.data",
       table: "sessions",
     }),
     secret: process.env.JWT_SECRET || "secret",
@@ -56,7 +57,7 @@ app.use("/auth", authRoutes);
 app.use('/charts', chartRoutes);
 app.use("/votes", voteRoutes);
 app.use("/likes", likeRoutes);
-app.use("/profile", profileRoutes);
+app.use("/profile", authMiddleware, profileRoutes);
 
 // Server Port
 const EXPRESS_PORT = process.env.PORT || 3000;

@@ -10,7 +10,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="has-navbar-fixed-top">
-    <!-- Include the navbar -->
     <%- include('templates/template_navbar.ejs') %>
 
     <div class="container">
@@ -26,7 +25,7 @@
       <div class="field">
         <div class="control">
           <button id="saveChanges" class="button is-primary">Save changes</button>
-          <span id="successMessage" class=" has-text-success">
+          <span id="successMessage" class="is-hidden has-text-success">
             <i class="fas fa-check"></i> Changes have been saved
           </span>
         </div>

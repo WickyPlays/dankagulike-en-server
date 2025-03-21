@@ -17,10 +17,18 @@ export const getChartDetailPage = async (req: any, res: any) => {
       return res.status(404).json({ message: "Chart not found." });
     }
 
+    const googleUser = await db.get("SELECT username FROM googleusers WHERE id = ?", [chart.googleUserId]);
     const formattedChart = {
       ...chart,
       date: chart.date.slice(0, 10).replace(/-/g, "/"),
+      contentType: [
+        "Songs",
+        "Note Skins",
+        "Sound Effects",
+        "GlobalLua",
+      ][chart.contentType],
       songInfo: chart.songInfo ? JSON.parse(chart.songInfo) : null,
+      googleUsername: googleUser ? googleUser.username : null,
     };
 
     res.render("charts_detail", {

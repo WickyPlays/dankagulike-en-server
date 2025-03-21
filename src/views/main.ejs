@@ -64,7 +64,7 @@
                     </thead>
                     <tbody>
                         <% contents.forEach(content => { %>
-                        <tr>
+                        <tr onclick="window.location.href='/charts/<%= content.id %>'" style="cursor: pointer;">
                             <td><%= content.id %></td>
                             <td>
                                 <%= content.contentType === 0 ? "Songs" :
@@ -102,7 +102,7 @@
                             <td>
                                 <button
                                     class="button btn-download is-link"
-                                    onclick="window.location.href='<%= content.downloadUrl %>'"
+                                    onclick="event.stopPropagation(); window.location.href='<%= content.downloadUrl %>'"
                                 >
                                     Download
                                 </button>

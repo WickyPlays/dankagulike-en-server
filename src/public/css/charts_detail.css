@@ -1,0 +1,160 @@
+/* Difficulty Tags */
+
+body {
+  min-height: 100vh;
+}
+
+.diff-easy {
+  background-color: #4caf50;
+}
+
+.diff-normal {
+  background-color: #2196f3;
+}
+
+.diff-hard {
+  background-color: #ffc107;
+}
+
+.diff-extra {
+  background-color: #ff5722;
+}
+
+.diff-lunatic {
+  background-color: #9c27b0;
+}
+
+.field-diff {
+  margin-bottom: 45px !important;
+}
+
+.btn-back {
+  margin-bottom: 20px !important;
+  background-color: #00000000;
+  color: #FFF;
+}
+
+h1 {
+  margin: 0 !important;
+}
+
+.container {
+  margin-top: 40px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  justify-content: center;
+}
+
+.image {
+  background-color: #FFF;
+  width: 28vw;
+  height: 28vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.tags > * {
+  font-size: 16px;
+}
+
+.tag {
+  color: #FFF;
+}
+
+.chart-type {
+  color: #000;
+}
+
+.chart-username {
+  color: #FFFFFF;
+}
+
+.chart-google-username {
+  color: #84ffb1;
+}
+
+.title-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Download Button */
+.btn-download {
+  background-color: #3273dc;
+  color: #fff;
+  transition: background-color 0.3s ease;
+}
+
+.btn-download:hover {
+  background-color: #276cda;
+}
+
+/* Like Button */
+.btn-like {
+  background-color: #f5f5f5;
+  border: 1px solid #dbdbdb;
+  color: #363636;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-like:hover {
+  background-color: #ff3860;
+  color: #fff;
+  border-color: transparent;
+}
+
+.stats {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Tooltip for Lua Icon */
+[data-tooltip] {
+  position: relative;
+  cursor: pointer;
+}
+
+[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  white-space: nowrap;
+  z-index: 10;
+}
+
+@media screen and (max-width: 768px) {
+  .columns.is-vcentered {
+      flex-direction: column;
+  }
+
+  .column.is-half {
+      width: 100%;
+  }
+
+  .title.is-2 {
+      font-size: 1.5rem;
+  }
+
+  .subtitle.is-4 {
+      font-size: 1.2rem;
+  }
+
+  .tags > * {
+      font-size: 14px;
+  }
+}
