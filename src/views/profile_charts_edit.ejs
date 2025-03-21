@@ -36,10 +36,11 @@
                         <div class="control">
                             <div class="select">
                                 <select name="contentType" required>
-                                    <option value="0" <%= chart.contentType === 0 ? 'selected' : '' %>>Songs</option>
-                                    <option value="1" <%= chart.contentType === 1 ? 'selected' : '' %>>NoteSkins</option>
-                                    <option value="2" <%= chart.contentType === 2 ? 'selected' : '' %>>SoundEffects</option>
-                                    <option value="3" <%= chart.contentType === 3 ? 'selected' : '' %>>GlobalLua</option>
+                                    <option value="0" <%=chart.contentType===0 ? 'selected' : '' %>>Songs</option>
+                                    <option value="1" <%=chart.contentType===1 ? 'selected' : '' %>>NoteSkins</option>
+                                    <option value="2" <%=chart.contentType===2 ? 'selected' : '' %>>SoundEffects
+                                    </option>
+                                    <option value="3" <%=chart.contentType===3 ? 'selected' : '' %>>GlobalLua</option>
                                 </select>
                             </div>
                         </div>
@@ -49,7 +50,8 @@
                     <div class="field">
                         <label class="label">Title</label>
                         <div class="control">
-                            <input class="input" type="text" name="title" placeholder="Title" value="<%= chart.title %>" required>
+                            <input class="input" type="text" name="title" placeholder="Title" value="<%= chart.title %>"
+                                required>
                         </div>
                         <p class="error-message" id="titleError"></p>
                     </div>
@@ -57,7 +59,8 @@
                     <div class="field">
                         <label class="label">Publisher</label>
                         <div class="control">
-                            <input class="input" type="text" name="publisher" placeholder="Publisher" value="<%= chart.publisher %>" required>
+                            <input class="input" type="text" name="publisher" placeholder="Publisher"
+                                value="<%= chart.publisher %>" required>
                         </div>
                         <p class="error-message" id="publisherError"></p>
                     </div>
@@ -65,15 +68,26 @@
                     <div class="field">
                         <label class="label">Image URL</label>
                         <div class="control">
-                            <input class="input" type="text" name="imageUrl" placeholder="Image URL" value="<%= chart.imageUrl %>">
+                            <input class="input" type="text" name="imageUrl" placeholder="Image URL"
+                                value="<%= chart.imageUrl %>">
                         </div>
                         <p class="error-message" id="imageUrlError"></p>
                     </div>
 
                     <div class="field">
+                        <label class="label">Download URL</label>
+                        <div class="control">
+                            <input class="input" type="text" name="downloadUrl" placeholder="Download URL"
+                                value="<%= chart.downloadUrl %>">
+                        </div>
+                        <p class="error-message" id="downloadUrlError"></p>
+                    </div>
+
+                    <div class="field">
                         <label class="label">Date</label>
                         <div class="control">
-                            <input class="input" type="date" name="date" id="dateField" placeholder="YYYY-MM-DD" value="<%= new Date(chart.date).toISOString().split('T')[0] %>">
+                            <input class="input" type="date" name="date" id="dateField" placeholder="YYYY-MM-DD"
+                                value="<%= formatDateLocal(chart.date) %>">
                         </div>
                         <p class="error-message" id="dateError"></p>
                     </div>
@@ -81,7 +95,8 @@
                     <div class="field">
                         <label class="label">Description</label>
                         <div class="control">
-                            <textarea class="textarea" name="description" placeholder="Description" required><%= chart.description %></textarea>
+                            <textarea class="textarea" name="description" placeholder="Description"
+                                required><%= chart.description %></textarea>
                         </div>
                         <p class="error-message" id="descriptionError"></p>
                     </div>
@@ -91,23 +106,28 @@
                         <div class="control control-diff">
                             <div class="diff-container">
                                 <span class="tag diff-easy">Easy</span>
-                                <input class="input" type="number" name="difficultiesEasy" placeholder="0" value="<%= chart.diff1 %>">
+                                <input class="input" type="number" name="difficultiesEasy" placeholder="0"
+                                    value="<%= chart.diff1 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-normal">Normal</span>
-                                <input class="input" type="number" name="difficultiesNormal" placeholder="0" value="<%= chart.diff2 %>">
+                                <input class="input" type="number" name="difficultiesNormal" placeholder="0"
+                                    value="<%= chart.diff2 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-hard">Hard</span>
-                                <input class="input" type="number" name="difficultiesHard" placeholder="0" value="<%= chart.diff3 %>">
+                                <input class="input" type="number" name="difficultiesHard" placeholder="0"
+                                    value="<%= chart.diff3 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-extra">Extra</span>
-                                <input class="input" type="number" name="difficultiesExtra" placeholder="0" value="<%= chart.diff4 %>">
+                                <input class="input" type="number" name="difficultiesExtra" placeholder="0"
+                                    value="<%= chart.diff4 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-lunatic">Lunatic</span>
-                                <input class="input" type="number" name="difficultiesLunatic" placeholder="0" value="<%= chart.diff5 %>" required>
+                                <input class="input" type="number" name="difficultiesLunatic" placeholder="0"
+                                    value="<%= chart.diff5 %>" required>
                             </div>
                         </div>
                         <p class="error-message" id="difficultiesError"></p>
@@ -117,7 +137,7 @@
                         <label class="label">Has Lua</label>
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox" name="hasLua" <%= chart.hasLua ? 'checked' : '' %>>
+                                <input type="checkbox" name="hasLua" <%=chart.hasLua ? 'checked' : '' %>>
                                 Yes
                             </label>
                         </div>
@@ -161,6 +181,7 @@
                         title: formData.get('title'),
                         publisher: formData.get('publisher'),
                         imageUrl: formData.get('imageUrl'),
+                        downloadUrl: formData.get('downloadUrl'),
                         date: formData.get('date'),
                         description: formData.get('description'),
                         songInfo: {

@@ -6,7 +6,6 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authRoutes";
 import contentRoutes from "./routes/contentRoutes";
-import voteRoutes from "./routes/voteRoutes";
 import likeRoutes from "./routes/likeRoutes";
 import supportRoutes from "./routes/supportRoutes";
 import profileRoutes from "./routes/profileRoutes";
@@ -55,7 +54,6 @@ app.use("/", contentRoutes);
 app.use("/support", supportRoutes);
 app.use("/auth", authRoutes);
 app.use('/charts', chartRoutes);
-app.use("/votes", voteRoutes);
 app.use("/likes", likeRoutes);
 app.use("/profile", authMiddleware, profileRoutes);
 

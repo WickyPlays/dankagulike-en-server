@@ -10,7 +10,7 @@ export function transformContent(content: any): Content {
     description: content.description,
     downloadUrl: convertLinkToDownloadable(content.downloadUrl),
     imageUrl: content.imageUrl,
-    date: new Date(content.date).toISOString(),
+    date: content.date,
     downloadCount: Number(content.downloadCount),
     voteAverageScore: Number(content.voteAverageScore),
     songInfo: JSON.parse(content.songInfo || '{"difficulties":[0,0,0,0,0],"hasLua":false}')

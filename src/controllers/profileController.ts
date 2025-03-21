@@ -35,6 +35,7 @@ export const postChartsAdd = async (req: any, res: any) => {
     title,
     publisher,
     imageUrl,
+    downloadUrl,
     date,
     description,
     songInfo,
@@ -73,6 +74,7 @@ export const postChartsAdd = async (req: any, res: any) => {
         title,
         publisher,
         imageUrl,
+        downloadUrl,
         description,
         date,
         downloadCount,
@@ -83,13 +85,14 @@ export const postChartsAdd = async (req: any, res: any) => {
         diff3,
         diff4,
         diff5
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
     `, [
       user.id,
       contentType,
       title,
       publisher,
       imageUrl,
+      downloadUrl,
       description || "",
       formattedDate,
       0, // downloadCount
@@ -129,7 +132,17 @@ export const getEditChart = async (req: any, res: any) => {
     }
 
     const googleUser = await db.get("SELECT username FROM googleusers WHERE id = ?", [user.id]);
-    res.render("profile_charts_edit", { chart, username: googleUser ? googleUser.username : null });
+
+    //A bit annoying here...
+    function formatDateLocal(dateString: any) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    res.render("profile_charts_edit", { chart, username: googleUser ? googleUser.username : null, formatDateLocal });
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch chart.", error });
   }
@@ -149,6 +162,7 @@ export const putEditChart = async (req: any, res: any) => {
     title,
     publisher,
     imageUrl,
+    downloadUrl,
     date,
     description,
     songInfo,
@@ -186,6 +200,7 @@ export const putEditChart = async (req: any, res: any) => {
         title = ?,
         publisher = ?,
         imageUrl = ?,
+        downloadUrl = ?,
         description = ?,
         date = ?,
         hasLua = ?,
@@ -200,6 +215,7 @@ export const putEditChart = async (req: any, res: any) => {
       title,
       publisher,
       imageUrl,
+      downloadUrl,
       description || "", // Default to empty string if description is not provided
       formattedDate,
       hasLua ? 1 : 0, // hasLua

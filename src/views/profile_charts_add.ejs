@@ -71,9 +71,18 @@
                     </div>
 
                     <div class="field">
+                        <label class="label">Download URL</label>
+                        <div class="control">
+                            <input class="input" type="text" name="downloadUrl" placeholder="Download URL" required>
+                        </div>
+                        <p class="error-message" id="downloadUrlError"></p>
+                    </div>
+
+                    <div class="field">
                         <label class="label">Date</label>
                         <div class="control">
-                            <input class="input" type="date" name="date" id="dateField" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}">
+                            <input class="input" type="date" name="date" id="dateField"
+                                pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}">
                         </div>
                         <p class="error-message" id="dateError"></p>
                     </div>
@@ -166,6 +175,7 @@
                         title: formData.get('title'),
                         publisher: formData.get('publisher'),
                         imageUrl: formData.get('imageUrl'),
+                        downloadUrl: formData.get('downloadUrl'),
                         date: formData.get('date'),
                         description: formData.get('description'),
                         songInfo: {
