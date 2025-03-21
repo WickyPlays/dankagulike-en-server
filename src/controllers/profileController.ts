@@ -90,7 +90,7 @@ export const postChartsAdd = async (req: any, res: any) => {
       title,
       publisher,
       imageUrl,
-      description || "", // Default to empty string if description is not provided
+      description || "",
       formattedDate,
       0, // downloadCount
       0, // voteAverageScore
