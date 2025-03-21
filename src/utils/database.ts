@@ -13,18 +13,16 @@ export async function initializeDatabase() {
     CREATE TABLE IF NOT EXISTS sessions (
       sid TEXT PRIMARY KEY,
       sess TEXT NOT NULL,
-      data TEXT NOT NULL,
-      expired INTEGER NOT NULL
+      expires INTEGER NOT NULL
     )
   `);
 
-  // Create googleusers table
   await db.exec(`
     CREATE TABLE IF NOT EXISTS googleusers (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      email TEXT UNIQUE NOT NULL,
+      googleId TEXT NOT NULL,
       username VARCHAR(40) NOT NULL DEFAULT "dkp_anonymous",
-      UNIQUE(email, username)
+      UNIQUE(googleId, username)
     )
   `);
 

@@ -13,7 +13,7 @@ passport.use(
   new JwtStrategy(opts as any, async (jwtPayload, done) => {
     try {
       const db = await dbPromise;
-      const user = await db.get("SELECT * FROM googleusers WHERE id = ?", [jwtPayload.id]);
+      const user = await db.get("SELECT * FROM googleusers WHERE googleId = ?", [jwtPayload.googleId]);
       if (user) {
         return done(null, user);
       } else {
@@ -36,12 +36,12 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const db = await dbPromise;
-        const email = profile.emails?.[0].value;
+        const googleId = profile.id; // Use Google ID instead of email
 
-        let user = await db.get("SELECT * FROM googleusers WHERE email = ?", [email]);
+        let user = await db.get("SELECT * FROM googleusers WHERE googleId = ?", [googleId]);
 
         if (!user) {
-          const result = await db.run("INSERT INTO googleusers (email) VALUES (?)", [email]);
+          const result = await db.run("INSERT INTO googleusers (googleId) VALUES (?)", [googleId]);
           const userId = result.lastID;
           const username = `dkp_${userId}`;
           await db.run("UPDATE googleusers SET username = ? WHERE id = ?", [username, userId]);
