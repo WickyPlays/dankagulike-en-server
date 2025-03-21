@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add charts | DankaguLike EN Server</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/profile_charts_add.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="has-navbar-fixed-top">
+    <nav class="navbar is-fixed-top is-primary" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <img class="nav-logo" src="/img/dankagulike_title_logo.png" alt="DankaguLike Logo" class="logo">
+            <h2 class="nav-title">DankaguLike EN Server</h2>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <% if (username) { %>
+                        <div class="dropdown is-right" id="userDropdown">
+                            <div class="dropdown-trigger">
+                                <button class="button is-light" aria-haspopup="true" aria-controls="dropdown-menu">
+                                    <span class="nav-username"><%= username %></span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <a href="/profile/charts" class="dropdown-item">My charts</a>
+                                    <a href="/profile/edit" class="dropdown-item">Edit Profile</a>
+                                    <a href="/auth/logout" class="dropdown-item">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <a class="button is-light" href="/auth/google">Login</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Add New Chart</h1>
+            <form id="addChartForm" action="/profile/charts/add" method="POST">
+                <div class="field">
+                    <label class="label">Content Type</label>
+                    <div class="control">
+                        <div class="select">
+                            <select name="contentType" required>
+                                <option value="0">Songs</option>
+                                <option value="1">NoteSkins</option>
+                                <option value="2">SoundEffects</option>
+                                <option value="3">GlobalLua</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Title</label>
+                    <div class="control">
+                        <input class="input" type="text" name="title" placeholder="Title" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Publisher</label>
+                    <div class="control">
+                        <input class="input" type="text" name="publisher" placeholder="Publisher" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Date</label>
+                    <div class="control">
+                        <input class="input" type="text" name="date" id="dateField" readonly>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Difficulties</label>
+                    <div class="control">
+                        <input class="input" type="number" name="difficultiesEasy" placeholder="Easy" required>
+                        <input class="input" type="number" name="difficultiesNormal" placeholder="Normal" required>
+                        <input class="input" type="number" name="difficultiesHard" placeholder="Hard" required>
+                        <input class="input" type="number" name="difficultiesExtra" placeholder="Extra" required>
+                        <input class="input" type="number" name="difficultiesLunatic" placeholder="Lunatic" required>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Has Lua</label>
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox" name="hasLua">
+                            Yes
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const dropdown = document.getElementById("userDropdown");
+            const button = dropdown.querySelector(".dropdown-trigger");
+
+            button.addEventListener("click", function (event) {
+                dropdown.classList.toggle("is-active");
+                event.stopPropagation();
+            });
+
+            document.addEventListener("click", function (event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove("is-active");
+                }
+            });
+
+            // Set the current date and time in the date field
+            const dateField = document.getElementById('dateField');
+            const now = new Date();
+            const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+            dateField.value = formattedDate;
+
+            // Handle form submission
+            document.getElementById('addChartForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(event.target);
+                const data = {
+                    contentType: parseInt(formData.get('contentType')),
+                    title: formData.get('title'),
+                    publisher: formData.get('publisher'),
+                    date: formData.get('date'),
+                    songInfo: {
+                        difficulties: [
+                            parseInt(formData.get('difficultiesEasy')),
+                            parseInt(formData.get('difficultiesNormal')),
+                            parseInt(formData.get('difficultiesHard')),
+                            parseInt(formData.get('difficultiesExtra')),
+                            parseInt(formData.get('difficultiesLunatic'))
+                        ],
+                        hasLua: formData.get('hasLua') === 'on'
+                    }
+                };
+
+                // Submit the form programmatically
+                fetch(event.target.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then(response => {
+                    if (response.ok) {
+                        window.location.href = '/profile/charts'; // Redirect after successful submission
+                    } else {
+                        alert('Failed to submit the form.');
+                    }
+                }).catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
+    <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 100vw;
+  box-sizing: content-box !important;
+  overflow-x: hidden;
+  margin-top: 1rem;
+  padding: 0 5rem;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo {
+  height: 35px !important;
+  width: auto;
+}
+
+.nav-title {
+  color: #000;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav-username {
+  color: #000;
+}
+
+.container {
+  padding: 30px 10rem;
+  box-sizing: border-box;
+}
+
+h1 {
+  color: #FFF;
+  font-size: 33px;
+  font-weight: 700;
+}
+
+.control {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+  body {
+    padding: 0 1rem;
+  }
+}

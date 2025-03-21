@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit profile | DankaguLike EN Server</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="stylesheet" href="/profile_edit.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="has-navbar-fixed-top">
+    <!-- Include the navbar -->
+    <%- include('templates/template_navbar.ejs') %>
+
+    <div class="container">
+      <h1>Edit profile</h1>
+      <hr>
+      <div class="field">
+        <label class="label">Username</label>
+        <div class="control">
+          <input class="input" type="text" id="username" value="<%= username %>" required>
+        </div>
+        <p id="errorMessage" class="help is-hidden has-text-danger"></p> <!-- Error message element -->
+      </div>
+      <div class="field">
+        <div class="control">
+          <button id="saveChanges" class="button is-primary">Save changes</button>
+          <span id="successMessage" class=" has-text-success">
+            <i class="fas fa-check"></i> Changes have been saved
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const saveChangesButton = document.getElementById("saveChanges");
+            const usernameInput = document.getElementById("username");
+            const successMessage = document.getElementById("successMessage");
+            const errorMessage = document.getElementById("errorMessage");
+
+            saveChangesButton.addEventListener("click", async function () {
+                const username = usernameInput.value.trim();
+
+                // Reset messages
+                successMessage.classList.add("is-hidden");
+                errorMessage.classList.add("is-hidden");
+
+                // Validate username
+                if (!username || username.length > 40) {
+                    errorMessage.textContent = "Username must be between 1 and 40 characters.";
+                    errorMessage.classList.remove("is-hidden");
+                    return;
+                }
+
+                try {
+                    const response = await fetch("/profile/edit", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ username })
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        successMessage.classList.remove("is-hidden");
+                    } else {
+                        errorMessage.textContent = result.message || "Failed to save changes.";
+                        errorMessage.classList.remove("is-hidden");
+                    }
+                } catch (error) {
+                    errorMessage.textContent = "An error occurred while saving changes.";
+                    errorMessage.classList.remove("is-hidden");
+                }
+            });
+        });
+    </script>
+    <script src="./main.js"></script>
+</body>
+</html>
