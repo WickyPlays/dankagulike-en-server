@@ -38,7 +38,7 @@
                 <i class="fas fa-code"></i>
               </span>
             </div>
-            <p class="chart-card-publisher">By: <span class="chart-card-publisher-name"><%= username %></span></p>
+            <p class="chart-card-publisher">By: <span class="chart-card-publisher-name"><%= chart.publisher %></span></p>
             <p class="chart-card-desc"><%= chart.description %></p>
             <div class="chart-card-diff">
               <span class="chart-card-diff-node diff-easy"><%= chart.diff1 %></span>
@@ -69,11 +69,18 @@
                 </span>
 
               </div>
-              <button class="button is-small is-danger delete-button" data-id="<%= chart.id %>">
-                <span class="icon">
-                  <i class="fas fa-trash"></i>
-                </span>
-              </button>
+              <div class="buttons are-small">
+                <a href="/profile/charts/edit/<%= chart.id %>" class="button is-small is-info">
+                  <span class="icon">
+                    <i class="fas fa-edit"></i>
+                  </span>
+                </a>
+                <button class="button is-small is-danger delete-button" data-id="<%= chart.id %>">
+                  <span class="icon">
+                    <i class="fas fa-trash"></i>
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         <% }) %>

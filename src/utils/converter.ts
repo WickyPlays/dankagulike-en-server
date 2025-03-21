@@ -1,4 +1,8 @@
 function convertLinkToDownloadable(link: string): string {
+  if (!link) {
+    return ""
+  }
+
   if (link.includes("drive.google.com")) {
     const match = link.match(/\/file\/d\/(.*?)\/(?:view|edit)/);
     if (match && match[1]) {

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add charts | DankaguLike EN Server</title>
+    <title>Edit charts | DankaguLike EN Server</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <link rel="stylesheet" href="/css/profile_charts_add.css">
+    <link rel="stylesheet" href="/css/profile_charts_edit.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -27,19 +27,19 @@
             <div class="container">
                 <div class="title-container">
                     <a href="/profile/charts" class="button is-primary"><i class="fas fa-arrow-left"></i> Back</a>
-                    <h1 class="title">Add New Chart</h1>
+                    <h1 class="title">Edit Chart (ID: <%= chart.id %>)</h1>
                 </div>
                 <hr>
-                <form id="addChartForm" action="/profile/charts/add" method="POST">
+                <form id="editChartForm" action="/profile/charts/edit/<%= chart.id %>" method="POST">
                     <div class="field">
                         <label class="label">Content Type</label>
                         <div class="control">
                             <div class="select">
                                 <select name="contentType" required>
-                                    <option value="0">Songs</option>
-                                    <option value="1">NoteSkins</option>
-                                    <option value="2">SoundEffects</option>
-                                    <option value="3">GlobalLua</option>
+                                    <option value="0" <%= chart.contentType === 0 ? 'selected' : '' %>>Songs</option>
+                                    <option value="1" <%= chart.contentType === 1 ? 'selected' : '' %>>NoteSkins</option>
+                                    <option value="2" <%= chart.contentType === 2 ? 'selected' : '' %>>SoundEffects</option>
+                                    <option value="3" <%= chart.contentType === 3 ? 'selected' : '' %>>GlobalLua</option>
                                 </select>
                             </div>
                         </div>
@@ -49,7 +49,7 @@
                     <div class="field">
                         <label class="label">Title</label>
                         <div class="control">
-                            <input class="input" type="text" name="title" placeholder="Title" required>
+                            <input class="input" type="text" name="title" placeholder="Title" value="<%= chart.title %>" required>
                         </div>
                         <p class="error-message" id="titleError"></p>
                     </div>
@@ -57,7 +57,7 @@
                     <div class="field">
                         <label class="label">Publisher</label>
                         <div class="control">
-                            <input class="input" type="text" name="publisher" placeholder="Publisher" required>
+                            <input class="input" type="text" name="publisher" placeholder="Publisher" value="<%= chart.publisher %>" required>
                         </div>
                         <p class="error-message" id="publisherError"></p>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="field">
                         <label class="label">Image URL</label>
                         <div class="control">
-                            <input class="input" type="text" name="imageUrl" placeholder="Image URL">
+                            <input class="input" type="text" name="imageUrl" placeholder="Image URL" value="<%= chart.imageUrl %>">
                         </div>
                         <p class="error-message" id="imageUrlError"></p>
                     </div>
@@ -73,7 +73,7 @@
                     <div class="field">
                         <label class="label">Date</label>
                         <div class="control">
-                            <input class="input" type="date" name="date" id="dateField" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}">
+                            <input class="input" type="date" name="date" id="dateField" placeholder="YYYY-MM-DD" value="<%= new Date(chart.date).toISOString().split('T')[0] %>">
                         </div>
                         <p class="error-message" id="dateError"></p>
                     </div>
@@ -81,7 +81,7 @@
                     <div class="field">
                         <label class="label">Description</label>
                         <div class="control">
-                            <textarea class="textarea" name="description" placeholder="Description" required></textarea>
+                            <textarea class="textarea" name="description" placeholder="Description" required><%= chart.description %></textarea>
                         </div>
                         <p class="error-message" id="descriptionError"></p>
                     </div>
@@ -91,23 +91,23 @@
                         <div class="control control-diff">
                             <div class="diff-container">
                                 <span class="tag diff-easy">Easy</span>
-                                <input class="input" type="number" name="difficultiesEasy" placeholder="0">
+                                <input class="input" type="number" name="difficultiesEasy" placeholder="0" value="<%= chart.diff1 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-normal">Normal</span>
-                                <input class="input" type="number" name="difficultiesNormal" placeholder="0">
+                                <input class="input" type="number" name="difficultiesNormal" placeholder="0" value="<%= chart.diff2 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-hard">Hard</span>
-                                <input class="input" type="number" name="difficultiesHard" placeholder="0">
+                                <input class="input" type="number" name="difficultiesHard" placeholder="0" value="<%= chart.diff3 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-extra">Extra</span>
-                                <input class="input" type="number" name="difficultiesExtra" placeholder="0">
+                                <input class="input" type="number" name="difficultiesExtra" placeholder="0" value="<%= chart.diff4 %>">
                             </div>
                             <div class="diff-container">
                                 <span class="tag diff-lunatic">Lunatic</span>
-                                <input class="input" type="number" name="difficultiesLunatic" placeholder="0" required>
+                                <input class="input" type="number" name="difficultiesLunatic" placeholder="0" value="<%= chart.diff5 %>" required>
                             </div>
                         </div>
                         <p class="error-message" id="difficultiesError"></p>
@@ -117,7 +117,7 @@
                         <label class="label">Has Lua</label>
                         <div class="control">
                             <label class="checkbox">
-                                <input type="checkbox" name="hasLua">
+                                <input type="checkbox" name="hasLua" <%= chart.hasLua ? 'checked' : '' %>>
                                 Yes
                             </label>
                         </div>
@@ -149,12 +149,7 @@
                     }
                 });
 
-                const dateField = document.getElementById('dateField');
-                const now = new Date();
-                const formattedDate = `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
-                dateField.value = formattedDate;
-
-                document.getElementById('addChartForm').addEventListener('submit', function (event) {
+                document.getElementById('editChartForm').addEventListener('submit', function (event) {
                     event.preventDefault();
 
                     // Clear previous error messages
@@ -181,7 +176,7 @@
                     };
 
                     fetch(event.target.action, {
-                        method: 'POST',
+                        method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json'
                         },

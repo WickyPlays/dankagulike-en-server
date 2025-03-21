@@ -22,6 +22,203 @@ export const getChartsAdd = (req: Request, res: Response) => {
   res.render("profile_charts_add", { username });
 };
 
+export const postChartsAdd = async (req: any, res: any) => {
+  const db = await dbPromise;
+  const user = req.user as any;
+
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const {
+    contentType,
+    title,
+    publisher,
+    imageUrl,
+    date,
+    description,
+    songInfo,
+  } = req.body;
+
+  const {
+    difficulties,
+    hasLua,
+  } = songInfo;
+
+  if (!title || title.trim() === "") {
+    return res.status(400).json({ message: "Title is required." });
+  }
+  if (!publisher || publisher.trim() === "") {
+    return res.status(400).json({ message: "Publisher is required." });
+  }
+
+  if (title.length > 250) {
+    return res.status(400).json({ message: "Title must be 250 characters or less." });
+  }
+  if (publisher.length > 250) {
+    return res.status(400).json({ message: "Publisher must be 250 characters or less." });
+  }
+
+  const currentDate = new Date().toLocaleDateString("en-US");
+  const formattedDate = date ? new Date(date).toLocaleDateString("en-US") : currentDate;
+
+  const defaultDifficulties = [0, 0, 0, 0, 0];
+  const formattedDifficulties = difficulties || defaultDifficulties;
+
+  try {
+    await db.run(`
+      INSERT INTO contents (
+        googleUserId,
+        contentType,
+        title,
+        publisher,
+        imageUrl,
+        description,
+        date,
+        downloadCount,
+        voteAverageScore,
+        hasLua,
+        diff1,
+        diff2,
+        diff3,
+        diff4,
+        diff5
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `, [
+      user.id,
+      contentType,
+      title,
+      publisher,
+      imageUrl,
+      description || "", // Default to empty string if description is not provided
+      formattedDate,
+      0, // downloadCount
+      0, // voteAverageScore
+      hasLua ? 1 : 0, // hasLua
+      formattedDifficulties[0], // Easy
+      formattedDifficulties[1], // Normal
+      formattedDifficulties[2], // Hard
+      formattedDifficulties[3], // Extra
+      formattedDifficulties[4], // Lunatic
+    ]);
+
+    res.status(200).json({ message: "Chart added successfully." });
+  } catch (error) {
+    console.error("Error adding chart:", error);
+    res.status(500).json({ message: "Failed to add chart.", error });
+  }
+};
+
+export const getEditChart = async (req: any, res: any) => {
+  const db = await dbPromise;
+  const { id } = req.params;
+  const user = req.user as any;
+
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const chart = await db.get(`
+      SELECT * FROM contents
+      WHERE id = ? AND googleUserId = ?
+    `, [id, user.id]);
+
+    if (!chart) {
+      return res.status(404).json({ message: "Chart not found." });
+    }
+
+    const googleUser = await db.get("SELECT username FROM googleusers WHERE id = ?", [user.id]);
+    res.render("profile_charts_edit", { chart, username: googleUser ? googleUser.username : null });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch chart.", error });
+  }
+};
+
+export const putEditChart = async (req: any, res: any) => {
+  const db = await dbPromise;
+  const { id } = req.params;
+  const user = req.user as any;
+
+  if (!user) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  const {
+    contentType,
+    title,
+    publisher,
+    imageUrl,
+    date,
+    description,
+    songInfo,
+  } = req.body;
+
+  const {
+    difficulties,
+    hasLua,
+  } = songInfo;
+
+  if (!title || title.trim() === "") {
+    return res.status(400).json({ message: "Title is required." });
+  }
+  if (!publisher || publisher.trim() === "") {
+    return res.status(400).json({ message: "Publisher is required." });
+  }
+
+  if (title.length > 250) {
+    return res.status(400).json({ message: "Title must be 250 characters or less." });
+  }
+  if (publisher.length > 250) {
+    return res.status(400).json({ message: "Publisher must be 250 characters or less." });
+  }
+
+  const currentDate = new Date().toLocaleDateString("en-US");
+  const formattedDate = date ? new Date(date).toLocaleDateString("en-US") : currentDate;
+
+  const defaultDifficulties = [0, 0, 0, 0, 0];
+  const formattedDifficulties = difficulties || defaultDifficulties;
+
+  try {
+    await db.run(`
+      UPDATE contents SET
+        contentType = ?,
+        title = ?,
+        publisher = ?,
+        imageUrl = ?,
+        description = ?,
+        date = ?,
+        hasLua = ?,
+        diff1 = ?,
+        diff2 = ?,
+        diff3 = ?,
+        diff4 = ?,
+        diff5 = ?
+      WHERE id = ? AND googleUserId = ?
+    `, [
+      contentType,
+      title,
+      publisher,
+      imageUrl,
+      description || "", // Default to empty string if description is not provided
+      formattedDate,
+      hasLua ? 1 : 0, // hasLua
+      formattedDifficulties[0], // Easy
+      formattedDifficulties[1], // Normal
+      formattedDifficulties[2], // Hard
+      formattedDifficulties[3], // Extra
+      formattedDifficulties[4], // Lunatic
+      id,
+      user.id,
+    ]);
+
+    res.status(200).json({ message: "Chart updated successfully." });
+  } catch (error) {
+    console.error("Error updating chart:", error);
+    res.status(500).json({ message: "Failed to update chart.", error });
+  }
+};
+
 export const getEditProfile = (req: Request, res: Response) => {
   const username = req.user ? (req.user as any).username : null;
   res.render('profile_edit', { username });

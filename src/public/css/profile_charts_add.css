@@ -1,0 +1,74 @@
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-bottom: 25px;
+}
+
+.control-diff {
+  display: flex;
+  gap: 15px;
+}
+
+option {
+  color: #FFF;
+}
+
+#addChartForm {
+  padding: 0 5rem;
+}
+
+@media screen and (max-width: 1000px) {
+  body {
+    padding: 0 1rem;
+  }
+}
+
+.diff-easy {
+  background-color: #4caf50;
+}
+
+.diff-normal {
+  background-color: #2196f3;
+}
+
+.diff-hard {
+  background-color: #ffc107;
+}
+
+.diff-extra {
+  background-color: #ff5722;
+}
+
+.diff-lunatic {
+  background-color: #9c27b0;
+}
+
+.diff-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+.input:hover {
+  border-color: #3273dc;
+}
+
+.input:focus {
+  border-color: #3273dc;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
