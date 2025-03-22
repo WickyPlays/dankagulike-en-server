@@ -19,5 +19,4 @@ Original instruction: [https://dankag-like.web.app/custom-server](https://dankag
 > The following source code is only used for reference. You are on your own in case anything goes wrong, especially on security side.
 
 ## Changelog
-- 1.0.4: Added pagination
-- 1.0.3: Mobile UI support (responsive update)
+None
